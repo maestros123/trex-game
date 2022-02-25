@@ -1,21 +1,22 @@
-<div class="game">
-  <div id="dino" #dino></div>
-  <div id="cactus" #cactus></div>
-  <div id="cloud"></div>
-  <div id="points">{{points}}</div>
+<div class="game-wrap">
+  <div class="game">
+    <div id="dino" #dino></div>
+    <div id="cactus" #cactus></div>
+    <div id="cloud"></div>
+    <div id="points">{{points}}</div>
+  </div>
 
   <div class="game-end" #gameEnd>
-      <div class="game-end-left"></div>
-      <div class="game-end-right">
-        <p>{{message}}</p>
-        <button (click)="newGame()">Новая игра</button>
+    <div class="game-end-left"></div>
+    <div class="game-end-right">
+      <p>{{message}}</p>
+      <button (click)="newGame()">Новая игра</button>
     </div>
 
   </div>
 
 
-    <div class="game-start" #gameStart>
-        <button (click)="newGame()">Новая игра</button>
-    </div>
+  <div class="game-start" #gameStart>
+    <button (click)="newGame()">Новая игра</button>
+  </div>
 </div>
-

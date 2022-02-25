@@ -1,3 +1,9 @@
+.game-wrap {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
 .game {
   width: 600px;
   height: 200px;
@@ -5,14 +11,16 @@
   margin: auto;
   position: relative;
   background-color: #f3f3f3;
+  z-index: 1;
+  overflow: hidden;
 }
 #dino {
   width: 4rem;
   height: 4rem;
   background-image: url(../../assets/img/dino.png);
   background-size: 4rem 4rem;
-  position: relative;
-  top: 136px;
+  position: absolute;
+  bottom: 0;
   z-index: 3;
 }
 #cactus {
@@ -20,17 +28,16 @@
   height: 4rem;
   background-image: url(../../assets/img/cactus.png);
   background-size: 3rem 4rem;
-  position: relative;
-  top:75px;
-  left: 580px;
-  //animation: cactusMove 1.5s infinite linear;
+  position: absolute;
+  bottom: 0;
+  right: -7%;
 }
 @keyframes cactusMove {
    0% {
-     left: 580px;
+     right: -7%;
    }
     100% {
-      left: -20px;
+      right: 100%;
     }
 }
 .jump {
@@ -38,25 +45,25 @@
 }
 @keyframes dinoJump {
   0% {
-    top: 136px;
+    bottom: 0;
   }
   20% {
-    top: 96px;
+    bottom: 15%;
   }
   40% {
-    top: 66px;
+    bottom: 30%;
   }
   50% {
-    top: 46px;
+    bottom: 40%;
   }
   60% {
-    top: 66px;
+    bottom: 30%;
   }
   80% {
-    top: 96px;
+    bottom: 15%;
   }
   100% {
-    top: 136px;
+    bottom: 0;
   }
 }
 #cloud {
@@ -96,7 +103,6 @@
   top: 0;
   background-color: #fff;
   z-index: 10;
-  left: -10%;
 
   button {
     background: #6ce38b;
@@ -120,7 +126,6 @@
   top: 0;
   background-color: #fff;
   z-index: 10;
-  left: -10%;
 
   p {
     width: 100%;

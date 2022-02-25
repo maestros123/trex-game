@@ -1,5 +1,4 @@
 import {Component, HostListener, ViewChild} from '@angular/core';
-import {GameService} from "../game.service";
 
 @Component({
   selector: 'app-sprites',
@@ -20,41 +19,62 @@ export class SpritesComponent {
 
   //При нажатии на пробел динозавр прыгает
   @HostListener('document:keydown.Space', []) onKeydownHandler() {
+    this.jump();
+  }
+  @HostListener('touchstart', []) onTouch() {
+    this.jump();
+  }
+
+  jump () {
     this.dino.nativeElement.classList.add('jump');
-    setTimeout(()=> this.dino.nativeElement.classList.remove('jump'), 700)
+    setTimeout(()=> this.dino.nativeElement.classList.remove('jump'), 700);
+  }
+
+  startPos () {
+    this.gameStart.nativeElement.style.display = "none";
+    this.gameEnd.nativeElement.style.display = "none";
+    this.cactus.nativeElement.style.right = "-7%";
+    this.dino.nativeElement.style.bottom = "0%";
+    this.cactus.nativeElement.style.animation =  "cactusMove 1.5s infinite linear";
+    this.points = 0;
   }
 
 
-
-
-
   newGame () {
-    this.gameStart.nativeElement.style.display = "none";
-    this.gameEnd.nativeElement.style.display = "none";
-    this.cactus.nativeElement.style.left = "580px";
-    this.cactus.nativeElement.style.animation =  "cactusMove 1.5s infinite linear"
-    this.points = 0;
+    this.startPos ();
     this.speed = 1.5;
 
     const setPoint = setInterval(() => this.points += 1, 100);
 
     const isAlive = setInterval(() => {
-      const dinoTop = (parseInt(window.getComputedStyle(this.dino.nativeElement).getPropertyValue('top')));
-      const cactusLeft = (parseInt(window.getComputedStyle(this.cactus.nativeElement).getPropertyValue('left')));
+      const dinoBottom = (parseInt(window.getComputedStyle(this.dino.nativeElement).getPropertyValue('bottom')));
+      const cactusRight = (parseInt(window.getComputedStyle(this.cactus.nativeElement).getPropertyValue('right')));
 
-      if (cactusLeft < 50 && cactusLeft > 0 && dinoTop >= 136) {
+      if (cactusRight < 600 && cactusRight > 500 && dinoBottom <= 30) {
+        this.cactus.nativeElement.style.animation = null;
+        this.dino.nativeElement.classList.remove('jump');
+        this.dino.nativeElement.style.bottom = dinoBottom + 'px';
+        this.cactus.nativeElement.style.right = cactusRight + 'px';
+
+
+        setTimeout(() => {
+          this.gameOver();
+        },300)
+
+
+        clearInterval(setPoint);
         if (this.record < this.points) {
           this.record = this.points;
         }
-        this.gameOver();
-        clearInterval(setPoint);
+
       }
     }, 10)
   }
 
   gameOver () {
     this.gameEnd.nativeElement.style.display = "flex";
-    this.cactus.nativeElement.style.animation = "none";
+    this.dino.nativeElement.style.bottom = null;
+    this.cactus.nativeElement.style.right = null;
     this.message = 'Вы набрали ' + this.points + ' очков.' + ' Рекорд ' + this.record;
   }
 }
