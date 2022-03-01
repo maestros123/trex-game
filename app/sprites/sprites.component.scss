@@ -15,17 +15,35 @@
   overflow: hidden;
 }
 #dino {
-  width: 4rem;
-  height: 4rem;
-  background-image: url(../../assets/img/dino.png);
-  background-size: 4rem 4rem;
+  width: 47px;
+  height: 60px;
+  background:  url(../../assets/img/dino.png);
   position: absolute;
   bottom: 0;
   z-index: 3;
+  animation: run 0.5s steps(4) infinite;
+
+  &.jump {
+    animation: dinoJump .9s linear;
+  }
+}
+@keyframes run {
+  100% {background-position: -100% 0;}
+}
+@keyframes dinoJump {
+  0% {
+    bottom: 0;
+  }
+  50% {
+    bottom: 40%;
+  }
+  100% {
+    bottom: 0;
+  }
 }
 #cactus {
-  width: 3rem;
-  height: 4rem;
+  width: 40px;
+  height: 50px;
   background-image: url(../../assets/img/cactus.png);
   background-size: 3rem 4rem;
   position: absolute;
@@ -40,32 +58,7 @@
       right: 100%;
     }
 }
-.jump {
-  animation: dinoJump .7s linear;
-}
-@keyframes dinoJump {
-  0% {
-    bottom: 0;
-  }
-  20% {
-    bottom: 15%;
-  }
-  40% {
-    bottom: 30%;
-  }
-  50% {
-    bottom: 40%;
-  }
-  60% {
-    bottom: 30%;
-  }
-  80% {
-    bottom: 15%;
-  }
-  100% {
-    bottom: 0;
-  }
-}
+
 #cloud {
   width: 4rem;
   height: 4rem;

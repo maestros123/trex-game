@@ -27,7 +27,7 @@ export class SpritesComponent {
 
   jump () {
     this.dino.nativeElement.classList.add('jump');
-    setTimeout(()=> this.dino.nativeElement.classList.remove('jump'), 700);
+    setTimeout(()=> this.dino.nativeElement.classList.remove('jump'), 900);
   }
 
   startPos () {
@@ -47,15 +47,19 @@ export class SpritesComponent {
     const setPoint = setInterval(() => this.points += 1, 100);
 
     const isAlive = setInterval(() => {
-      const dinoBottom = (parseInt(window.getComputedStyle(this.dino.nativeElement).getPropertyValue('bottom')));
-      const cactusRight = (parseInt(window.getComputedStyle(this.cactus.nativeElement).getPropertyValue('right')));
 
-      if (cactusRight < 600 && cactusRight > 500 && dinoBottom <= 30) {
+      const dinoRight = this.dino.nativeElement.getBoundingClientRect().right,
+            dinoBottom = this.dino.nativeElement.getBoundingClientRect().bottom,
+            dinoCord = (parseInt(window.getComputedStyle(this.dino.nativeElement).getPropertyValue('bottom'))),
+            cactusTop = this.cactus.nativeElement.getBoundingClientRect().top,
+            cactusLeft  = this.cactus.nativeElement.getBoundingClientRect().left,
+            cactusCord = (parseInt(window.getComputedStyle(this.cactus.nativeElement).getPropertyValue('right')));
+
+      if (dinoRight >= cactusLeft && dinoBottom >= cactusTop) {
         this.cactus.nativeElement.style.animation = null;
         this.dino.nativeElement.classList.remove('jump');
-        this.dino.nativeElement.style.bottom = dinoBottom + 'px';
-        this.cactus.nativeElement.style.right = cactusRight + 'px';
-
+        this.dino.nativeElement.style.bottom = dinoCord + 'px';
+        this.cactus.nativeElement.style.right = cactusCord + 'px';
 
         setTimeout(() => {
           this.gameOver();
@@ -66,7 +70,6 @@ export class SpritesComponent {
         if (this.record < this.points) {
           this.record = this.points;
         }
-
       }
     }, 10)
   }
